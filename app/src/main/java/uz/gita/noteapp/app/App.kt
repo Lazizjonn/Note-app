@@ -1,7 +1,7 @@
 package uz.gita.noteapp.app
 
 import android.app.Application
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
-@AndroidEntryPoint
-class App: Application()
+@HiltAndroidApp
+class App : Application()

@@ -7,12 +7,28 @@
 
     <fragment
         android:id="@+id/splashScreen"
-        android:name="uz.gita.noteapp.ui.screens.SplashScreen"
+        android:name="uz.gita.noteapp.presentation.ui.screens.SplashScreen"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" />
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/action_splashScreen_to_mainScreen"
+            app:destination="@id/mainScreen"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/mainScreen"
-        android:name="uz.gita.noteapp.ui.screens.MainScreen"
+        android:name="uz.gita.noteapp.presentation.ui.screens.MainScreen"
         android:label="fragment_main_screen"
-        tools:layout="@layout/fragment_main_screen" />
+        tools:layout="@layout/fragment_main_screen"/>
+    <fragment
+        android:id="@+id/addNoteScreen"
+        android:name="uz.gita.noteapp.presentation.ui.screens.AddNoteScreen"
+        android:label="fragment_add_note_screen"
+        tools:layout="@layout/fragment_add_note_screen" />
+    <fragment
+        android:id="@+id/addTaskScreen"
+        android:name="uz.gita.noteapp.presentation.ui.screens.AddTaskScreen"
+        android:label="fragment_add_task_screen"
+        tools:layout="@layout/fragment_add_task_screen" />
 </navigation>
