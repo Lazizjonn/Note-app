@@ -12,8 +12,8 @@ import uz.gita.noteapp.R
 import uz.gita.noteapp.data.model.NoteData
 import uz.gita.noteapp.databinding.FragmentPageNoteBinding
 import uz.gita.noteapp.presentation.ui.adapter.NoteAdapter
-import uz.gita.noteapp.presentation.viewmodel.NoteViewModel
-import uz.gita.noteapp.presentation.viewmodel.impl.NoteViewModelImpl
+import uz.gita.noteapp.presentation.viewmodel.note.NoteViewModel
+import uz.gita.noteapp.presentation.viewmodel.note.impl.NoteViewModelImpl
 
 @AndroidEntryPoint
 class NotePage : Fragment(R.layout.fragment_page_note) {
@@ -21,7 +21,7 @@ class NotePage : Fragment(R.layout.fragment_page_note) {
     private val viewModel: NoteViewModel by viewModels<NoteViewModelImpl>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.noteLiveData.observe(viewLifecycleOwner, noteObserver)
+        viewModel.allNoteLiveData.observe(viewLifecycleOwner, noteObserver)
     }
 
     private val noteObserver = Observer<List<NoteData>> { noteData ->

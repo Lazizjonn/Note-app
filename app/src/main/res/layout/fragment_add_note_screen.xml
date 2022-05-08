@@ -6,14 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.screens.AddNoteScreen">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Note"
-        android:textSize="36sp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/add_note_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/addNote_btn_back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black"
+                tools:ignore="ContentDescription" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/addNoteTitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/addNote_btn_menu"
+                app:layout_constraintStart_toEndOf="@+id/addNote_btn_back"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Phone number" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/addNote_btn_menu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_more"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/add_note_edit_note"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="Note"
+        android:background="null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_note_app_bar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

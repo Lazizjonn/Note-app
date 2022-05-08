@@ -1,4 +1,4 @@
-package uz.gita.taskapp.presentation.ui.pager
+package uz.gita.noteapp.presentation.ui.pager
 
 import android.os.Bundle
 import android.view.View
@@ -12,8 +12,8 @@ import uz.gita.noteapp.R
 import uz.gita.noteapp.data.model.TaskData
 import uz.gita.noteapp.databinding.FragmentPageTaskBinding
 import uz.gita.noteapp.presentation.ui.adapter.TaskAdapter
-import uz.gita.noteapp.presentation.viewmodel.TaskViewModel
-import uz.gita.noteapp.presentation.viewmodel.impl.TaskViewModelImpl
+import uz.gita.noteapp.presentation.viewmodel.task.TaskViewModel
+import uz.gita.noteapp.presentation.viewmodel.task.impl.TaskViewModelImpl
 
 @AndroidEntryPoint
 class TaskPage : Fragment(R.layout.fragment_page_task) {
@@ -21,7 +21,7 @@ class TaskPage : Fragment(R.layout.fragment_page_task) {
     private val viewModel: TaskViewModel by viewModels<TaskViewModelImpl>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.taskLiveData.observe(viewLifecycleOwner, taskObserver)
+        viewModel.allTaskLiveData.observe(viewLifecycleOwner, taskObserver)
     }
 
     private val taskObserver = Observer<List<TaskData>> { taskData ->

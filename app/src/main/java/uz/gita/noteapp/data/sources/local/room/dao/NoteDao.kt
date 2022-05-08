@@ -15,10 +15,10 @@ interface NoteDao {
     @Delete
     suspend fun deleteNote(data: NoteEntity)
 
-    @Query("SELECT * FROM NoteEntity WHERE NoteEntity.isDeleted == false")
+    @Query("SELECT * FROM NoteEntity WHERE NoteEntity.isDeleted == 0")
     suspend fun getAllNotes(): List<NoteEntity>
 
-    @Query("SELECT * FROM NoteEntity WHERE NoteEntity.isDeleted == true")
+    @Query("SELECT * FROM NoteEntity WHERE NoteEntity.isDeleted == 1")
     suspend fun getAllDeletedNotes(): List<NoteEntity>
 
 }

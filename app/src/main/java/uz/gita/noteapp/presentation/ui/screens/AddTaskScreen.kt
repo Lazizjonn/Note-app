@@ -8,8 +8,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import uz.gita.noteapp.R
 import uz.gita.noteapp.databinding.FragmentAddTaskScreenBinding
-import uz.gita.noteapp.presentation.viewmodel.AddNoteViewModel
-import uz.gita.noteapp.presentation.viewmodel.impl.AddNoteViewModelImpl
+import uz.gita.noteapp.presentation.viewmodel.note.AddNoteViewModel
+import uz.gita.noteapp.presentation.viewmodel.note.impl.AddNoteViewModelImpl
 
 @AndroidEntryPoint
 class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {

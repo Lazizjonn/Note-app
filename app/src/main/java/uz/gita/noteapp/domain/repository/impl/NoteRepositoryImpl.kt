@@ -10,8 +10,11 @@ class NoteRepositoryImpl @Inject constructor(
 ) : NoteRepository {
 
 
-    override suspend fun getAllNotes(): List<NoteEntity> {
-        return noteDao.getAllNotes()
-    }
+    override suspend fun getAllNotes(): List<NoteEntity> = noteDao.getAllNotes()
+    override suspend fun getAllDeletedNotes(): List<NoteEntity> = noteDao.getAllDeletedNotes()
+    override suspend fun insertNote(data: NoteEntity) = noteDao.insertNote(data)
+    override suspend fun updateNote(data: NoteEntity) = noteDao.updateNote(data)
+    override suspend fun deleteNote(data: NoteEntity) = noteDao.deleteNote(data)
+
 
 }

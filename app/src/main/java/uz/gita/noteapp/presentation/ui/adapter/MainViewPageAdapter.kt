@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import uz.gita.noteapp.presentation.ui.pager.NotePage
-import uz.gita.taskapp.presentation.ui.pager.TaskPage
+import uz.gita.noteapp.presentation.ui.pager.TaskPage
 
 class MainViewPageAdapter(
     fm: FragmentManager,

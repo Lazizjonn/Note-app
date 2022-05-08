@@ -7,17 +7,17 @@ import uz.gita.noteapp.data.sources.local.room.entity.TaskEntity
 interface TaskDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNote(data: TaskEntity)
+    suspend fun insertTask(data: TaskEntity)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateNote(data: TaskEntity)
+    suspend fun updateTask(data: TaskEntity)
 
     @Delete
-    suspend fun deleteNote(data: TaskEntity)
+    suspend fun deleteTask(data: TaskEntity)
 
-    @Query("SELECT * FROM TaskEntity WHERE TaskEntity.isDeleted == false")
-    suspend fun getAllNotes(): List<TaskEntity>
+    @Query("SELECT * FROM TaskEntity WHERE TaskEntity.isDeleted == 0")
+    suspend fun getAllTasks(): List<TaskEntity>
 
-    @Query("SELECT * FROM TaskEntity WHERE TaskEntity.isDeleted == true")
-    suspend fun getAllDeletedNotes(): List<TaskEntity>
+    @Query("SELECT * FROM TaskEntity WHERE TaskEntity.isDeleted == 1")
+    suspend fun getAllDeletedTasks(): List<TaskEntity>
 }

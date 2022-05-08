@@ -12,8 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.gita.noteapp.R
 import uz.gita.noteapp.databinding.FragmentMainScreenBinding
 import uz.gita.noteapp.presentation.ui.adapter.MainViewPageAdapter
-import uz.gita.noteapp.presentation.viewmodel.MainViewModel
-import uz.gita.noteapp.presentation.viewmodel.impl.MainViewModelImpl
+import uz.gita.noteapp.presentation.viewmodel.main.MainViewModel
+import uz.gita.noteapp.presentation.viewmodel.main.impl.MainViewModelImpl
 
 @AndroidEntryPoint
 class MainScreen : Fragment(R.layout.fragment_main_screen) {

@@ -11,8 +11,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import uz.gita.noteapp.R
 import uz.gita.noteapp.databinding.FragmentSplashScreenBinding
-import uz.gita.noteapp.presentation.viewmodel.SplashViewModel
-import uz.gita.noteapp.presentation.viewmodel.impl.SplashViewModelImpl
+import uz.gita.noteapp.presentation.viewmodel.splash.SplashViewModel
+import uz.gita.noteapp.presentation.viewmodel.splash.impl.SplashViewModelImpl
 
 @AndroidEntryPoint
 class SplashScreen : Fragment(R.layout.fragment_splash_screen) {

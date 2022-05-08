@@ -8,8 +8,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import uz.gita.noteapp.R
 import uz.gita.noteapp.databinding.FragmentAddNoteScreenBinding
-import uz.gita.noteapp.presentation.viewmodel.AddNoteViewModel
-import uz.gita.noteapp.presentation.viewmodel.impl.AddNoteViewModelImpl
+import uz.gita.noteapp.presentation.viewmodel.note.AddNoteViewModel
+import uz.gita.noteapp.presentation.viewmodel.note.impl.AddNoteViewModelImpl
 
 @AndroidEntryPoint
 class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
