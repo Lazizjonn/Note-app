@@ -1,6 +1,5 @@
 package uz.gita.noteapp.data.sources.local.room.dao
 
-
 import androidx.room.*
 import uz.gita.noteapp.data.sources.local.room.entity.NoteEntity
 
