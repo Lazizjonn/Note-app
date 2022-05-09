@@ -1,5 +1,6 @@
 package uz.gita.noteapp.presentation.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -20,20 +21,22 @@ class NoteAdapter(private val list: List<NoteData>) : ListAdapter<NoteData, Note
     inner class NoteViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.noteLinear.setOnClickListener {
-                noteListener?.invoke(list[absoluteAdapterPosition])
-            }
+            binding.noteLinear.setOnClickListener { noteListener?.invoke(list[absoluteAdapterPosition]) }
         }
 
         fun bind() {
             binding.noteText.text = list[absoluteAdapterPosition].title
+            Log.d("TTT", "bind")
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteAdapter.NoteViewHolder =
         NoteViewHolder(ItemNoteBinding.inflate(LayoutInflater.from(parent.context)))
 
-    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) = holder.bind()
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+        holder.bind()
+        Log.d("TTT", "onBindViewHolder")
+    }
 
     fun setNoteListener(block: ((NoteData) -> Unit)) {
         noteListener = block

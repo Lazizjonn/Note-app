@@ -19,9 +19,7 @@ class AddNoteViewModelImpl @Inject constructor(
     override val noteAddedLiveData = MutableLiveData<Unit>()
 
     override fun saveNote(data: NoteEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            useCase.insertNote(data)
-        }
+        viewModelScope.launch(Dispatchers.IO) { useCase.insertNote(data) }
     }
 
 

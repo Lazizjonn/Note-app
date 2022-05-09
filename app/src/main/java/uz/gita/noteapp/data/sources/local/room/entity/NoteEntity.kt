@@ -7,13 +7,13 @@ import uz.gita.noteapp.data.model.common.NoteData
 @Entity
 data class NoteEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val title: String,
-    val note: String,
-    val tag: String,
-    val createTime: Long,
-    val isPinned: Boolean,
-    val isDeleted: Boolean
+    val id: Int = 0,
+    val title: String = "",
+    val note: String = "",
+    val tag: String = "",
+    val createTime: Long = 0,
+    val isPinned: Boolean = false,
+    val isDeleted: Boolean = false
 )
 
 fun NoteEntity.getNoteData(): NoteData = NoteData(
