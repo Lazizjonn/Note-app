@@ -4,7 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import uz.gita.noteapp.data.model.TaskData
+import uz.gita.noteapp.data.model.common.TaskData
+import uz.gita.noteapp.data.sources.local.room.entity.TaskEntity
 import uz.gita.noteapp.data.sources.local.room.entity.getTaskData
 import uz.gita.noteapp.domain.repository.TaskRepository
 import uz.gita.noteapp.domain.usecase.task.TaskUseCase
@@ -20,4 +21,8 @@ class TaskUseCaseImpl @Inject constructor(
         }
         emit(list)
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun updateTask(data: TaskEntity) {
+        repository.updateTask(data)
+    }
 }

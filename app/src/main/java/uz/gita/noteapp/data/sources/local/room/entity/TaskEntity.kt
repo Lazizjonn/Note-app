@@ -2,8 +2,7 @@ package uz.gita.noteapp.data.sources.local.room.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import uz.gita.noteapp.data.model.NoteData
-import uz.gita.noteapp.data.model.TaskData
+import uz.gita.noteapp.data.model.common.TaskData
 
 @Entity
 data class TaskEntity(

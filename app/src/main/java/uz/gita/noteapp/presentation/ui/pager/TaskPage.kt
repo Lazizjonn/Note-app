@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import uz.gita.noteapp.R
-import uz.gita.noteapp.data.model.TaskData
+import uz.gita.noteapp.data.model.common.TaskData
 import uz.gita.noteapp.databinding.FragmentPageTaskBinding
 import uz.gita.noteapp.presentation.ui.adapter.TaskAdapter
 import uz.gita.noteapp.presentation.viewmodel.task.TaskViewModel

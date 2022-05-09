@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import uz.gita.noteapp.data.model.TaskData
+import uz.gita.noteapp.data.model.common.TaskData
 import uz.gita.noteapp.databinding.ItemTaskBinding
 
 class TaskAdapter(private val list: List<TaskData>) : ListAdapter<TaskData, TaskAdapter.TaskViewHolder>(TaskDiffUtil) {

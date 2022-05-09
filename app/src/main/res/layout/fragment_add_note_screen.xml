@@ -11,6 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/note_input_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,21 +33,20 @@
                 app:tint="@color/black"
                 tools:ignore="ContentDescription" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <org.wordpress.aztec.AztecText
                 android:id="@+id/addNoteTitle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@null"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/addNote_btn_menu"
                 app:layout_constraintStart_toEndOf="@+id/addNote_btn_back"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Phone number" />
+                tools:text="Title" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/addNote_btn_menu"
@@ -52,6 +54,8 @@
                 android:layout_height="match_parent"
                 android:background="?android:selectableItemBackground"
                 android:padding="12dp"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="textNoSuggestions|textMultiLine"
                 android:src="@drawable/ic_more"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,23 +67,30 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/add_note_edit_note"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:hint="Note"
-        android:background="null"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <org.wordpress.aztec.AztecText
+        android:id="@+id/note_input_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Write your note here"
+        android:imeOptions="flagNoExtractUi"
+        android:inputType="textNoSuggestions|textMultiLine"
+        android:padding="10dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_note_app_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/add_note_app_bar"
+        app:textColor="?android:attr/textColorPrimary"
+        tools:text="@tools:sample/lorem[20]" />
 
-    <org.wordpress.aztec.AztecText
-        android:id="@+id/visual"
+    <org.wordpress.aztec.toolbar.AztecToolbar
+        android:id="@+id/formatting_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:imeOptions="flagNoExtractUi"
-        app:historyEnable="false" />
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

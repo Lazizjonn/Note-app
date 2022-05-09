@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import uz.gita.noteapp.data.model.NoteData
+import uz.gita.noteapp.data.model.common.NoteData
 import uz.gita.noteapp.databinding.ItemNoteBinding
 
 class NoteAdapter(private val list: List<NoteData>) : ListAdapter<NoteData, NoteAdapter.NoteViewHolder>(NoteDiffUtil) {

@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.wordpress.aztec.Aztec
 import uz.gita.noteapp.R
+import uz.gita.noteapp.data.model.common.IAztecToolbarClickListenerImpl
 import uz.gita.noteapp.databinding.FragmentAddNoteScreenBinding
 import uz.gita.noteapp.presentation.viewmodel.note.AddNoteViewModel
 import uz.gita.noteapp.presentation.viewmodel.note.impl.AddNoteViewModelImpl
@@ -18,6 +20,11 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        Aztec.with(
+            this.binding.noteInputView,
+            this.binding.formattingToolbar,
+            IAztecToolbarClickListenerImpl()
+        )
     }
 
 }

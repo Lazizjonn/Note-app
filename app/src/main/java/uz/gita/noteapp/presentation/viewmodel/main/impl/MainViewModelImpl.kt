@@ -4,9 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import uz.gita.noteapp.presentation.viewmodel.main.MainViewModel
+import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModelImpl : ViewModel(), MainViewModel {
+class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
     override val selectPagePositionLiveData = MutableLiveData<Int>()
     override val openAddNoteScreenLiveData = MutableLiveData<Unit>()
     override val openAddTaskScreenLiveData = MutableLiveData<Unit>()

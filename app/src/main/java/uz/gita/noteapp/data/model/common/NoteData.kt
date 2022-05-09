@@ -1,4 +1,4 @@
-package uz.gita.noteapp.data.model
+package uz.gita.noteapp.data.model.common
 
 data class NoteData(
     val id: Int,
