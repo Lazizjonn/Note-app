@@ -8,6 +8,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddNoteViewModelImpl @Inject constructor(
-    private val useCase: AddNoteUseCase
+     val useCase: AddNoteUseCase
 ) : ViewModel(), AddNoteViewModel {
+
+
 }
