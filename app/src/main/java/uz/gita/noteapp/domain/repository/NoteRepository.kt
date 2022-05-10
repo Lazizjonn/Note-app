@@ -1,6 +1,9 @@
 package uz.gita.noteapp.domain.repository
 
+import android.nfc.Tag
+import uz.gita.noteapp.data.model.common.TagData
 import uz.gita.noteapp.data.sources.local.room.entity.NoteEntity
+import uz.gita.noteapp.data.sources.local.room.entity.TagEntity
 
 interface NoteRepository {
     suspend fun getAllNotes(): List<NoteEntity>
@@ -8,4 +11,9 @@ interface NoteRepository {
     suspend fun insertNote(data: NoteEntity)
     suspend fun updateNote(data: NoteEntity)
     suspend fun deleteNote(data: NoteEntity)
+
+    suspend fun getTags(): List<TagEntity>?
+
+    suspend fun deleteTag(list: List<TagEntity>): Boolean
+    suspend fun insertTag(list: List<TagEntity>): Boolean
 }

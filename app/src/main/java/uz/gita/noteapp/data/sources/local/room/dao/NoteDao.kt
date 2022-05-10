@@ -1,6 +1,7 @@
 package uz.gita.noteapp.data.sources.local.room.dao
 
 import androidx.room.*
+import uz.gita.noteapp.data.sources.local.room.entity.TagEntity
 import uz.gita.noteapp.data.sources.local.room.entity.NoteEntity
 
 @Dao
@@ -20,5 +21,14 @@ interface NoteDao {
 
     @Query("SELECT * FROM NoteEntity WHERE NoteEntity.isDeleted == 1")
     suspend fun getAllDeletedNotes(): List<NoteEntity>
+
+    @Query("SELECT * FROM tags")
+    suspend fun getTagList(): List<TagEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTag(list: List<TagEntity>)
+
+    @Delete
+    suspend fun deleteTag(list: List<TagEntity>)
 
 }
