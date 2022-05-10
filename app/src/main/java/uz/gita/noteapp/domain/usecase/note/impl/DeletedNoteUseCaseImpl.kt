@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import uz.gita.noteapp.data.model.common.NoteData
 import uz.gita.noteapp.data.sources.local.room.entity.NoteEntity
+import uz.gita.noteapp.data.sources.local.room.entity.TagEntity
 import uz.gita.noteapp.data.sources.local.room.entity.getNoteData
 import uz.gita.noteapp.domain.repository.NoteRepository
 import uz.gita.noteapp.domain.usecase.note.DeletedNoteUseCase
@@ -23,4 +24,5 @@ class DeletedNoteUseCaseImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
     override suspend fun deleteNote(data: NoteEntity) = repository.deleteNote(data)
+
 }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import uz.gita.noteapp.data.model.common.NoteData
 import uz.gita.noteapp.databinding.ItemNoteBinding
 
-class NoteAdapter(private val list: List<NoteData>) : ListAdapter<NoteData, NoteAdapter.NoteViewHolder>(NoteDiffUtil) {
+class NoteAdapter() : ListAdapter<NoteData, NoteAdapter.NoteViewHolder>(NoteDiffUtil) {
 
     private var noteListener: ((NoteData) -> Unit)? = null
 
@@ -21,11 +21,11 @@ class NoteAdapter(private val list: List<NoteData>) : ListAdapter<NoteData, Note
     inner class NoteViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.noteLinear.setOnClickListener { noteListener?.invoke(list[absoluteAdapterPosition]) }
+            binding.noteLinear.setOnClickListener { noteListener?.invoke(currentList[absoluteAdapterPosition]) }
         }
 
         fun bind() {
-            binding.noteText.text = list[absoluteAdapterPosition].title
+            binding.noteText.text = currentList[absoluteAdapterPosition].title
             Log.d("TTT", "bind")
         }
     }
