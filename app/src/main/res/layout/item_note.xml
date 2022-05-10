@@ -1,26 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/noteLinear"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:background="@color/teal_200"
-    android:orientation="horizontal">
+    android:foreground="?android:selectableItemBackground"
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/notePicture"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
-        android:src="@drawable/notepad" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/noteText"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:textSize="22sp"
-        android:text="@string/androidx_startup" />
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/notePicture"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_close" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/noteText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/androidx_startup"
+                android:textSize="22sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
