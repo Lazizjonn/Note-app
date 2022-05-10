@@ -26,7 +26,7 @@ class NoteAdapter(private val list: List<NoteData>) : ListAdapter<NoteData, Note
 
         fun bind() {
             binding.noteText.text = list[absoluteAdapterPosition].title
-            Log.d("TTT", "bind")
+            Log.d("TTT", "bind, "+ list[absoluteAdapterPosition].title)
         }
     }
 

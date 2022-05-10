@@ -1,7 +1,6 @@
 package uz.gita.noteapp.presentation.ui.pager
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,10 +27,9 @@ class NotePage : Fragment(R.layout.fragment_page_note) {
     }
 
     private val noteObserver = Observer<List<NoteData>> { noteData ->
-        Log.d("TTT", "NotePage: ${noteData.size} ")
         val adapter = NoteAdapter(noteData)
         binding.noteRecyclerview.adapter = adapter
-        binding.noteRecyclerview.layoutManager =LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false )
+        binding.noteRecyclerview.layoutManager =LinearLayoutManager(requireContext(),RecyclerView.VERTICAL, false )
         adapter.submitList(noteData)
         adapter.setNoteListener { findNavController().navigate(R.id.addNoteScreen) }
     }
