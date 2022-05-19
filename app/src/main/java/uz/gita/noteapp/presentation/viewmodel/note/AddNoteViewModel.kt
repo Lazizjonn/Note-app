@@ -8,14 +8,17 @@ import uz.gita.noteapp.data.sources.local.room.entity.TagEntity
 
 interface AddNoteViewModel {
     val noteAddedLiveData: LiveData<Unit>
+    val noteDeletedLiveData: LiveData<Unit>
     val tagListLiveData: LiveData<List<TagData>>
     val tagDeletedLiveData: LiveData<Boolean>
     val tagInsertedLiveData: LiveData<Boolean>
 
-    fun saveNote(data: NoteEntity)
+    fun saveNote(data: NoteData)
+
+    fun deleteNote(data: NoteData)
 
     fun getTags()
 
-    fun deleteTag(list: List<TagData>)
-    fun insertTag(list: List<TagData>)
+    fun deleteTags(list: List<TagData>)
+    fun insertTags(list: List<TagData>)
 }

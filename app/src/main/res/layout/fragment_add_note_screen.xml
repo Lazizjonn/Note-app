@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toTopOf="@+id/note_input_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,26 +38,28 @@
                 android:id="@+id/addNoteTitle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:maxLines="1"
                 android:layout_marginStart="10dp"
-                android:textSize="20sp"
+                android:gravity="center_vertical"
                 android:hint="Write your title here"
+                android:maxLines="1"
+                android:inputType="textCapSentences"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                app:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/addNote_btn_menu"
+                app:layout_constraintEnd_toStartOf="@+id/moreMenu"
                 app:layout_constraintStart_toEndOf="@+id/addNote_btn_back"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:textColor="@color/black"
+                />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/addNote_btn_menu"
+                android:id="@+id/moreMenu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="?android:selectableItemBackground"
-                android:padding="12dp"
                 android:imeOptions="flagNoExtractUi"
                 android:inputType="textNoSuggestions|textMultiLine"
+                android:padding="12dp"
                 android:src="@drawable/ic_more"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,21 +72,38 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <org.wordpress.aztec.AztecText
-        android:id="@+id/note_input_view"
+        android:id="@+id/tag_input_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="100dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Write your note here"
+        android:hint="Write your tags..."
+        android:inputType="textCapSentences"
+        android:imeOptions="flagNoExtractUi"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/formatting_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/note_input_view"
+        app:textColor="@color/black" />
+
+    <org.wordpress.aztec.AztecText
+        android:id="@+id/note_input_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Write your note..."
         android:imeOptions="flagNoExtractUi"
         android:inputType="textNoSuggestions|textMultiLine"
         android:padding="10dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/tag_input_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_note_app_bar"
-        app:textColor="?android:attr/textColorPrimary" />
+        app:textColor="@color/black" />
 
     <org.wordpress.aztec.toolbar.AztecToolbar
         android:id="@+id/formatting_toolbar"
@@ -92,5 +112,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveNoteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:tint="#3868FB"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@id/formatting_toolbar"
+        android:src="@drawable/ic_save"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

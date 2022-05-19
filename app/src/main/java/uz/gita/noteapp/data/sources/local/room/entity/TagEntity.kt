@@ -9,6 +9,4 @@ data class TagEntity(
     @PrimaryKey
     val id: Int,
     val tag: String
-){
-    fun toTagData(): TagData = TagData(id, tag)
-}
+)

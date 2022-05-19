@@ -4,15 +4,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.chip.Chip
+    <TextView
         android:id="@+id/chip_text"
         android:clickable="true"
         android:focusable="true"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/tag_background"
         android:foreground="?selectableItemBackground"
         android:layout_width="wrap_content"
         android:text="android"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:textSize="16sp"
         android:layout_height="wrap_content">
 
-    </com.google.android.material.chip.Chip>
+    </TextView>
 </androidx.appcompat.widget.LinearLayoutCompat>

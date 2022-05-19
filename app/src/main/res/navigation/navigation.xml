@@ -25,12 +25,20 @@
         android:id="@+id/addNoteScreen"
         android:name="uz.gita.noteapp.presentation.ui.screens.AddNoteScreen"
         android:label="fragment_add_note_screen"
-        tools:layout="@layout/fragment_add_note_screen" />
+        tools:layout="@layout/fragment_add_note_screen" >
+        <argument
+            android:name="note"
+            app:argType="uz.gita.noteapp.data.model.common.NoteData" />
+    </fragment>
     <fragment
         android:id="@+id/addTaskScreen"
         android:name="uz.gita.noteapp.presentation.ui.screens.AddTaskScreen"
         android:label="fragment_add_task_screen"
-        tools:layout="@layout/fragment_add_task_screen" />
+        tools:layout="@layout/fragment_add_task_screen" >
+        <argument
+            android:name="task"
+            app:argType="uz.gita.noteapp.data.model.common.TaskData" />
+    </fragment>
     <fragment
         android:id="@+id/deletedNoteScreen"
         android:name="uz.gita.noteapp.presentation.ui.screens.DeletedNoteScreen"
@@ -50,5 +58,9 @@
         android:id="@+id/taskPage"
         android:name="uz.gita.noteapp.presentation.ui.pager.TaskPage"
         android:label="fragment_page_task"
-        tools:layout="@layout/fragment_page_task" />
+        tools:layout="@layout/fragment_page_task" >
+        <action
+            android:id="@+id/action_taskPage_to_addTaskScreen"
+            app:destination="@id/addTaskScreen" />
+    </fragment>
 </navigation>

@@ -22,6 +22,6 @@ class DeletedTaskUseCaseImpl @Inject constructor(
         emit(list)
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun deleteTask(data: TaskEntity) = repository.deleteTask(data)
+    override fun deleteTask(data: TaskEntity) = repository.deleteTask(data)
 
 }

@@ -30,7 +30,8 @@ class NoteAdapter : ListAdapter<NoteData, NoteAdapter.NoteViewHolder>(NoteDiffUt
         init {
             image = view.findViewById(R.id.image)
             text = view.findViewById(R.id.textView)
-            view.findViewById<LinearLayout>(R.id.note_linear).setOnClickListener { noteListener?.invoke(currentList[absoluteAdapterPosition]) }
+            view.findViewById<LinearLayout>(R.id.note_linear).setOnClickListener {
+                noteListener?.invoke(currentList[absoluteAdapterPosition]) }
         }
 
         fun bind() {

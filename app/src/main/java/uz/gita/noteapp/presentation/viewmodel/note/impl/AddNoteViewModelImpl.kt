@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uz.gita.noteapp.data.model.common.NoteData
 import uz.gita.noteapp.data.model.common.TagData
 import uz.gita.noteapp.data.sources.local.room.entity.NoteEntity
 import uz.gita.noteapp.data.sources.local.room.entity.TagEntity
@@ -19,6 +20,7 @@ class AddNoteViewModelImpl @Inject constructor(
 ) : ViewModel(), AddNoteViewModel {
 
     override val noteAddedLiveData = MutableLiveData<Unit>()
+    override val noteDeletedLiveData = MutableLiveData<Unit>()
     override val tagListLiveData = MutableLiveData<List<TagData>>()
     override val tagDeletedLiveData = MutableLiveData<Boolean>()
     override val tagInsertedLiveData = MutableLiveData<Boolean>()
@@ -27,28 +29,41 @@ class AddNoteViewModelImpl @Inject constructor(
         getTags()
     }
 
-    override fun saveNote(data: NoteEntity) {
-        viewModelScope.launch(Dispatchers.IO) { useCase.insertNote(data) }
+    override fun saveNote(data: NoteData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = useCase.insertNote(data)
+            if (result) {
+                noteAddedLiveData.postValue(Unit)
+            }
+        }
+    }
+    override fun deleteNote(data: NoteData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = useCase.deleteNote(data)
+            if (result) {
+                noteDeletedLiveData.postValue(Unit)
+            }
+        }
     }
 
     override fun getTags(){
         viewModelScope.launch {
-            val result = useCase.getTags() ?: listOf()
-            tagListLiveData.postValue(result)
+//            val result = useCase.getTags() ?: listOf()
+//            tagListLiveData.postValue(result)
         }
     }
 
-    override fun deleteTag(list: List<TagData>){
+    override fun deleteTags(list: List<TagData>){
         viewModelScope.launch {
-            val result = useCase.deleteTag(list)
-            tagDeletedLiveData.postValue(result)
+//            val result = useCase.deleteTag(list)
+//            tagDeletedLiveData.postValue(result)
         }
     }
 
-    override fun insertTag(list: List<TagData>){
+    override fun insertTags(list: List<TagData>){
          viewModelScope.launch {
-             val result = useCase.insertTag(list)
-             tagInsertedLiveData.postValue(result)
+//             val result = useCase.insertTag(list)
+//             tagInsertedLiveData.postValue(result)
          }
     }
 

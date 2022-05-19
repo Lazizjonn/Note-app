@@ -7,9 +7,10 @@ import uz.gita.noteapp.data.sources.local.room.entity.NoteEntity
 
 interface NoteUseCase {
     fun getAllNotes():Flow<List<NoteData>>
+
     suspend fun updateNote(data: NoteEntity)
 
-
-    suspend fun getTags(): List<TagData>?
+//
+//    suspend fun getTags(): List<TagData>?
 
 }

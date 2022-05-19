@@ -1,34 +1,40 @@
 package uz.gita.noteapp.presentation.ui.adapter
 
+import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import uz.gita.noteapp.data.model.common.NoteData
+import dagger.hilt.android.qualifiers.ApplicationContext
+import uz.gita.noteapp.R
 import uz.gita.noteapp.data.model.common.TagData
-import uz.gita.noteapp.databinding.ItemNoteBinding
 import uz.gita.noteapp.databinding.TagLayoutBinding
+import javax.inject.Inject
 
-class TagAdapter : ListAdapter<TagData, TagAdapter.NoteViewHolder>(TagDiffUtil) {
+class TagAdapter(private val context: Context) : ListAdapter<TagData, TagAdapter.NoteViewHolder>(TagDiffUtil) {
 
     private var noteListener: ((TagData) -> Unit)? = null
 
     object TagDiffUtil : DiffUtil.ItemCallback<TagData>() {
-        override fun areItemsTheSame(oldItem: TagData, newItem: TagData): Boolean = oldItem.id == newItem.id
+        override fun areItemsTheSame(oldItem: TagData, newItem: TagData): Boolean = oldItem.tag == newItem.tag
         override fun areContentsTheSame(oldItem: TagData, newItem: TagData): Boolean = oldItem == newItem
-    }
+     }
 
     inner class NoteViewHolder(private val binding: TagLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-
         init {
-            binding.chipText.setOnClickListener { noteListener?.invoke(currentList[absoluteAdapterPosition]) }
+            binding.chipText.setOnClickListener { noteListener?.invoke(getItem(absoluteAdapterPosition)) }
         }
 
         fun bind() {
-            binding.chipText.text = currentList[absoluteAdapterPosition].tag
-            Log.d("TTT", "bind")
+            binding.chipText.text = getItem(absoluteAdapterPosition).tag
+
+            if (getItem(absoluteAdapterPosition).isChosen) {  binding.chipText.setBackground(ContextCompat.getDrawable(context, R.drawable.chosen_tag_background)) }
+            else {  binding.chipText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background)) }
+
         }
     }
 
@@ -37,10 +43,15 @@ class TagAdapter : ListAdapter<TagData, TagAdapter.NoteViewHolder>(TagDiffUtil) 
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.bind()
-        Log.d("TTT", "onBindViewHolder")
     }
 
     fun setNoteListener(block: ((TagData) -> Unit)) {
         noteListener = block
     }
+
+    override fun submitList(list: List<TagData>?) {
+        super.submitList(list)
+        notifyDataSetChanged()
+    }
+
 }

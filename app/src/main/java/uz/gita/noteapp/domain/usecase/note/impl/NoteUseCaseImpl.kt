@@ -17,10 +17,10 @@ class NoteUseCaseImpl @Inject constructor(
 ) : NoteUseCase {
 
 
-    override suspend fun getTags(): List<TagData>? {
-        val result = repository.getTags()
-        return result?.map { it.toTagData() }
-    }
+//    override suspend fun getTags(): List<TagData>? {
+//        val result = repository.getTags()
+//        return result?.map { it.toTagData() }
+//    }
 
     override fun getAllNotes(): Flow<List<NoteData>> = flow<List<NoteData>> {
         val list: List<NoteData> = repository.getAllNotes().map {

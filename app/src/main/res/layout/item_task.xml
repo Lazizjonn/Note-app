@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/taskLinear"
-    android:layout_height="?actionBarSize"
+    android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/teal_700"
+    android:background="@color/blue_light"
     android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/taskPicture"
-        android:layout_width="80dp"
+    <CheckBox
+        android:id="@+id/task_isCheck"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/taskpad" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/taskText"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/title"
+        android:maxLines="2"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:gravity="center"
+        android:gravity="center_vertical"
+        android:padding="6dp"
         android:textSize="22sp"
         tools:text="@string/androidx_startup" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_close"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@null"/>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,8 +1,10 @@
 package uz.gita.noteapp.domain.usecase.task
 
-import uz.gita.noteapp.data.sources.local.room.entity.TaskEntity
+import kotlinx.coroutines.flow.Flow
+import uz.gita.noteapp.data.model.common.TaskData
 
 interface AddTaskUseCase {
-    suspend fun insertTask(data: TaskEntity)
-    suspend fun updateTask(data: TaskEntity)
+    fun insertTask(data: TaskData): Flow<Unit>
+    fun updateTask(data: TaskData): Flow<Unit>
+    fun deleteTask(data: TaskData): Flow<Unit>
 }

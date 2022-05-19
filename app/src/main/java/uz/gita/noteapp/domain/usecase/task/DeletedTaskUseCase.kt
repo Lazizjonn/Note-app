@@ -6,5 +6,6 @@ import uz.gita.noteapp.data.sources.local.room.entity.TaskEntity
 
 interface DeletedTaskUseCase {
     fun getAllDeletedTasks(): Flow<List<TaskData>>
-    suspend fun deleteTask(data: TaskEntity)
+
+    fun deleteTask(data: TaskEntity): Flow<Unit>
 }

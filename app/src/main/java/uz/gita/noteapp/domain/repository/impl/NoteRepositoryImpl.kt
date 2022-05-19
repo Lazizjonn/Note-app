@@ -12,16 +12,31 @@ class NoteRepositoryImpl @Inject constructor(
 
     override suspend fun getAllNotes(): List<NoteEntity> = noteDao.getAllNotes()
     override suspend fun getAllDeletedNotes(): List<NoteEntity> = noteDao.getAllDeletedNotes()
-    override suspend fun insertNote(data: NoteEntity) = noteDao.insertNote(data)
     override suspend fun updateNote(data: NoteEntity) = noteDao.updateNote(data)
-    override suspend fun deleteNote(data: NoteEntity) = noteDao.deleteNote(data)
 
+    override suspend fun insertNote(data: NoteEntity): Boolean {
+        try {
+            noteDao.insertNote(data)
+            return true
+        } catch (e: Throwable) {
+            return false
+        }
+    }
+
+    override suspend fun deleteNote(data: NoteEntity): Boolean {
+        try {
+            noteDao.deleteNote(data)
+            return true
+        } catch (e: Throwable) {
+            return false
+        }
+    }
 
     override suspend fun getTags(): List<TagEntity>? {
         try {
             val result = noteDao.getTagList()
             return result
-        } catch (e: Throwable){
+        } catch (e: Throwable) {
             return null
         }
     }
@@ -31,21 +46,21 @@ class NoteRepositoryImpl @Inject constructor(
         try {
             noteDao.deleteTag(list)
             return true
-        } catch (e: Throwable){
+        } catch (e: Throwable) {
             return false
         }
 
     }
+
     override suspend fun insertTag(list: List<TagEntity>): Boolean {
         try {
             noteDao.insertTag(list)
             return true
-        } catch (e: Throwable){
+        } catch (e: Throwable) {
             return false
         }
 
     }
-
-
 }
+
 

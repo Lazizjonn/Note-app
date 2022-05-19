@@ -5,4 +5,6 @@ import uz.gita.noteapp.data.model.common.TaskData
 
 interface TaskViewModel {
     val allTaskLiveData: LiveData<List<TaskData>>
+
+    fun getTaskList()
 }

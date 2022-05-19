@@ -7,8 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-
+    <color name="kulrang">#616161</color>
+    <color name="grey">#AEAEAE</color>
     <color name="colorBackground">#F3EFEF</color>
+    <color name="tag_backgr">#E8E8E8</color>
 
 </resources>

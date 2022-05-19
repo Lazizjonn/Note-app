@@ -18,11 +18,8 @@ class TaskViewModelImpl @Inject constructor(
 
     override val allTaskLiveData = MutableLiveData<List<TaskData>>()
 
-    init {
-        load()
-    }
 
-    private fun load() {
+    override fun getTaskList() {
         useCase.getAllTasks().onEach {
             allTaskLiveData.value = it
         }.launchIn(viewModelScope)

@@ -23,6 +23,5 @@ class DeletedNoteUseCaseImpl @Inject constructor(
         emit(list)
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun deleteNote(data: NoteEntity) = repository.deleteNote(data)
 
 }

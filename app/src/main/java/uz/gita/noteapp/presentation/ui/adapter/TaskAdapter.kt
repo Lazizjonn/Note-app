@@ -1,14 +1,21 @@
 package uz.gita.noteapp.presentation.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import uz.gita.noteapp.R
+import uz.gita.noteapp.data.model.common.NoteData
 import uz.gita.noteapp.data.model.common.TaskData
 import uz.gita.noteapp.databinding.ItemTaskBinding
 
-class TaskAdapter(private val list: List<TaskData>) : ListAdapter<TaskData, TaskAdapter.TaskViewHolder>(TaskDiffUtil) {
+class TaskAdapter: ListAdapter<TaskData, TaskAdapter.TaskViewHolder>(TaskDiffUtil) {
 
     private var taskListener: ((TaskData) -> Unit)? = null
 
@@ -17,22 +24,33 @@ class TaskAdapter(private val list: List<TaskData>) : ListAdapter<TaskData, Task
         override fun areContentsTheSame(oldItem: TaskData, newItem: TaskData): Boolean = oldItem == newItem
     }
 
-    inner class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var image: ImageView
+        var text: TextView
         init {
-            taskListener?.invoke(list[absoluteAdapterPosition])
+            image = view.findViewById(R.id.image)
+            text = view.findViewById(R.id.textView)
+            view.findViewById<LinearLayout>(R.id.note_linear).setOnClickListener {
+                taskListener?.invoke(currentList[absoluteAdapterPosition]) }
         }
 
         fun bind() {
-            binding.taskText.text = list[absoluteAdapterPosition].title
+            text.text = currentList[absoluteAdapterPosition].title
+            Log.d("TTT", "bind")
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder =
-        TaskViewHolder(ItemTaskBinding.inflate(LayoutInflater.from(parent.context)))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskAdapter.TaskViewHolder =
+        TaskViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false))
 
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) = holder.bind()
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        holder.bind()
+        Log.d("TTT", "onBindViewHolder")
+    }
 
-    fun setTaskListener(block: (TaskData) -> Unit) {
+    fun setTaskListener(block: ((TaskData) -> Unit)) {
         taskListener = block
     }
+
+
 }

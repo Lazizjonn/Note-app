@@ -7,6 +7,5 @@ import uz.gita.noteapp.data.sources.local.room.entity.TagEntity
 
 interface DeletedNoteUseCase {
     fun getAllDeletedNotes(): Flow<List<NoteData>>
-    suspend fun deleteNote(data: NoteEntity)
 
 }
