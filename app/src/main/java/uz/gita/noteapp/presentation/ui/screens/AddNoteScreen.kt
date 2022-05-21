@@ -107,7 +107,6 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
             addNoteTitle.isEnabled = false
             addNoteTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
 
-
             noteInputView.fromHtml(it.note)
             noteInputView.isEnabled = false
             noteInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
@@ -116,6 +115,9 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
             tagInputView.fromHtml(tagString.trim())
             tagInputView.isEnabled = false
             tagInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+
+
+            Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
         }
 
     }

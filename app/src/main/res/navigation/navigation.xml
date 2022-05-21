@@ -40,16 +40,6 @@
             app:argType="uz.gita.noteapp.data.model.common.TaskData" />
     </fragment>
     <fragment
-        android:id="@+id/deletedNoteScreen"
-        android:name="uz.gita.noteapp.presentation.ui.screens.DeletedNoteScreen"
-        android:label="fragment_deleted_note_screen"
-        tools:layout="@layout/fragment_deleted_note_screen" />
-    <fragment
-        android:id="@+id/deletedTaskScreen"
-        android:name="uz.gita.noteapp.presentation.ui.screens.DeletedTaskScreen"
-        android:label="fragment_deleted_task_screen"
-        tools:layout="@layout/fragment_deleted_task_screen" />
-    <fragment
         android:id="@+id/notePage"
         android:name="uz.gita.noteapp.presentation.ui.pager.NotePage"
         android:label="fragment_page_note"

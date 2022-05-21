@@ -71,22 +71,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <org.wordpress.aztec.AztecText
-        android:id="@+id/tag_input_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Write your tags..."
-        android:inputType="textCapSentences"
-        android:imeOptions="flagNoExtractUi"
-        android:padding="10dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/formatting_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/note_input_view"
-        app:textColor="@color/black" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_note_app_bar"
+        />
 
     <org.wordpress.aztec.AztecText
         android:id="@+id/note_input_view"
@@ -103,6 +96,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_note_app_bar"
+        app:textColor="@color/black" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/note_input_view"
+        />
+
+
+    <org.wordpress.aztec.AztecText
+        android:id="@+id/tag_input_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Write your tags..."
+        android:inputType="textCapSentences"
+        android:imeOptions="flagNoExtractUi"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/formatting_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/note_input_view"
         app:textColor="@color/black" />
 
     <org.wordpress.aztec.toolbar.AztecToolbar

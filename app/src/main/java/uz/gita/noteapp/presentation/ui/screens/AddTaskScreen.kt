@@ -1,7 +1,6 @@
 package uz.gita.noteapp.presentation.ui.screens
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -25,9 +24,9 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
     private val binding by viewBinding(FragmentAddTaskScreenBinding::bind)
     private val viewModel: AddTaskViewModel by viewModels<AddTaskViewModelImpl>()
     private var argTaskData: TaskData? = null
-    private var argTaskSize = 4
     private val childTasklist = ArrayList<ChildTask>()
-    private val adapter by lazy { ChildTaskAdapter(requireContext(), argTaskData != null) }
+    private var adapter: ChildTaskAdapter? = null
+    private var adapter2: ChildTaskAdapter? = null
     private var taskId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +37,7 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
 //        Log.d("TAG", "onCreate: " + argTaskData.toString() + argTaskSize)
         argTaskData = arguments?.getSerializable("my_task") as TaskData?
         taskId = argTaskData?.id ?: 0
-        Log.d("TAG", "onCreate: " + argTaskData.toString() + argTaskSize)
+        adapter = ChildTaskAdapter(requireContext(), argTaskData != null)
 
     }
 
@@ -54,36 +53,50 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
     private fun clicks() {
         binding.add.setOnClickListener {
             childTasklist.add(ChildTask(childTasklist.size, "", false))
-            adapter.submitList(childTasklist.toMutableList())
+            adapter!!.submitList(childTasklist.toMutableList())
         }
 
         binding.addTaskBtnBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        adapter.setCancelTaskListener {
+        adapter!!.setCancelTaskListener {
             childTasklist.remove(it)
-            adapter.submitList(childTasklist.toMutableList())
+            adapter!!.submitList(childTasklist.toMutableList())
         }
 
-        adapter.setChildTaskListener { new ->
+        adapter!!.setChildTaskListener { new ->
             childTasklist.map{ old ->
                 if (new == old) new
             }
-            adapter.submitList(childTasklist.toMutableList())
+            adapter!!.submitList(childTasklist.toMutableList())
         }
+
+
 
         binding.saveTaskBtn.setOnClickListener {
             // save
-            val newTask = TaskData(
-                taskId,
-                binding.addTaskTitle.text.toString(),
-                adapter.currentList,
-                argTaskData?.createTime ?: System.currentTimeMillis(),
-                argTaskData?.isPinned ?: false,
-                argTaskData?.isDeleted ?: false
-            )
-            viewModel.addTask(newTask)
+            if (adapter != null){
+                val newTask = TaskData(
+                    taskId,
+                    binding.addTaskTitle.text.toString(),
+                    adapter!!.currentList,
+                    argTaskData?.createTime ?: System.currentTimeMillis(),
+                    argTaskData?.isPinned ?: false,
+                    argTaskData?.isDeleted ?: false
+                )
+                viewModel.addTask(newTask)
+            } else {
+                val newTask = TaskData(
+                    taskId,
+                    binding.addTaskTitle.text.toString(),
+                    adapter2!!.currentList,
+                    argTaskData?.createTime ?: System.currentTimeMillis(),
+                    argTaskData?.isPinned ?: false,
+                    argTaskData?.isDeleted ?: false
+                )
+                viewModel.addTask(newTask)
+            }
         }
 
         binding.moreMenu.setOnClickListener {
@@ -98,16 +111,28 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
                     }
                     R.id.delete -> {
                         // delete
-                        if (taskId > 0){
-                            val deletingTask = TaskData(
-                                taskId,
-                                binding.addTaskTitle.text.toString(),
-                                adapter.currentList,
-                                argTaskData?.createTime ?: System.currentTimeMillis(),
-                                argTaskData?.isPinned ?: false,
-                                argTaskData?.isDeleted ?: false
-                            )
-                            viewModel.deleteTask(deletingTask)
+                        if (taskId > 0 ){
+                            if (adapter != null){
+                                val deletingTask = TaskData(
+                                    taskId,
+                                    binding.addTaskTitle.text.toString(),
+                                    adapter!!.currentList,
+                                    argTaskData?.createTime ?: System.currentTimeMillis(),
+                                    argTaskData?.isPinned ?: false,
+                                    argTaskData?.isDeleted ?: false
+                                )
+                                viewModel.deleteTask(deletingTask)
+                            } else {
+                                val deletingTask = TaskData(
+                                    taskId,
+                                    binding.addTaskTitle.text.toString(),
+                                    adapter2!!.currentList,
+                                    argTaskData?.createTime ?: System.currentTimeMillis(),
+                                    argTaskData?.isPinned ?: false,
+                                    argTaskData?.isDeleted ?: false
+                                )
+                                viewModel.deleteTask(deletingTask)
+                            }
                         } else Toast.makeText(requireContext(), "You cannot delete", Toast.LENGTH_SHORT).show()
                         true
                     }
@@ -121,7 +146,24 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
 
     private fun setEditeble() {
         binding.addTaskTitle.isEnabled = true
-        adapter.enableEditText()
+        adapter = null
+        adapter2 = ChildTaskAdapter(requireContext(), false)
+        binding.taskRecyclerview.adapter = adapter2
+        binding.taskRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        adapter2!!.submitList(childTasklist)
+
+        adapter2!!.setCancelTaskListener {
+            childTasklist.remove(it)
+            adapter2!!.submitList(childTasklist.toMutableList())
+        }
+
+        adapter2!!.setChildTaskListener { new ->
+            childTasklist.map{ old ->
+                if (new == old) new
+            }
+            adapter2!!.submitList(childTasklist.toMutableList())
+        }
+
     }
 
     private fun liveDatas() {
@@ -140,8 +182,14 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
             binding.addTaskTitle.setText(argTaskData!!.title)
             binding.addTaskTitle.isEnabled = false
             childTasklist.addAll(argTaskData!!.childTasks)
-            adapter.submitList(argTaskData!!.childTasks)
+            adapter!!.submitList(argTaskData!!.childTasks)
+
+            Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
+        } else {
+            childTasklist.add(ChildTask(1, "", false))
+            adapter!!.submitList(childTasklist)
         }
+
     }
 
     private val taskAddedObserver = Observer<Unit>{

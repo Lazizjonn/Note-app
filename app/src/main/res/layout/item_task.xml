@@ -6,7 +6,7 @@
     android:id="@+id/taskLinear"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/blue_light"
+    android:background="#FDE6A0"
     android:orientation="horizontal">
 
     <CheckBox
@@ -21,11 +21,11 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/merriweather_regular"
         android:gravity="center_vertical"
-        android:padding="6dp"
-        android:textSize="22sp"
-        tools:text="@string/androidx_startup" />
+        android:padding="10dp"
+        android:textSize="19sp"
+        android:hint="write task..."/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/cancel"

@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import uz.gita.noteapp.R
 import uz.gita.noteapp.data.model.common.NoteData
-import uz.gita.noteapp.databinding.ItemNoteBinding
-import uz.gita.noteapp.databinding.NoteItemBinding
 
 class NoteAdapter : ListAdapter<NoteData, NoteAdapter.NoteViewHolder>(NoteDiffUtil) {
 

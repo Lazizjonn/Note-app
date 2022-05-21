@@ -65,7 +65,7 @@ class NotePage : Fragment(R.layout.fragment_page_note) {
 
         tagAdapter.setNoteListener{
             viewModel.tagFilter(it)
-            Toast.makeText(requireContext(), it.tag, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), it.tag, Toast.LENGTH_SHORT).show()
         }
     }
 

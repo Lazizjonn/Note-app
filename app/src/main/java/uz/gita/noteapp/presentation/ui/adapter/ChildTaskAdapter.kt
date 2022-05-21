@@ -13,7 +13,7 @@ import uz.gita.noteapp.R
 import uz.gita.noteapp.data.model.common.ChildTask
 import uz.gita.noteapp.databinding.ItemTaskBinding
 
-class ChildTaskAdapter(private val context: Context, private val bool: Boolean) : ListAdapter<ChildTask, ChildTaskAdapter.NoteViewHolder>(TagDiffUtil) {
+class ChildTaskAdapter(private val context: Context, private var editMode: Boolean) : ListAdapter<ChildTask, ChildTaskAdapter.NoteViewHolder>(TagDiffUtil) {
 
     private var taskListener: ((ChildTask) -> Unit)? = null
     private var cancelListener: ((ChildTask) -> Unit)? = null
@@ -27,8 +27,6 @@ class ChildTaskAdapter(private val context: Context, private val bool: Boolean) 
     inner class NoteViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             _binding = binding
-            if (bool) disableEditText(binding)
-
             binding.taskIsCheck.setOnClickListener {
                 currentList[absoluteAdapterPosition].isDone = binding.taskIsCheck.isChecked
                 taskListener?.invoke(getItem(absoluteAdapterPosition))
@@ -43,6 +41,9 @@ class ChildTaskAdapter(private val context: Context, private val bool: Boolean) 
         }
 
         fun bind() = with(absoluteAdapterPosition) {
+            if (editMode) { disableEditText(binding) }
+            else { enableEditText() }
+
             binding.taskIsCheck.isChecked = getItem(this).isDone
             binding.title.setText(getItem(this).title)
 
@@ -78,15 +79,17 @@ class ChildTaskAdapter(private val context: Context, private val bool: Boolean) 
     }
 
     fun disableEditText(binding: ItemTaskBinding) {
+        binding.title.setTextColor(ContextCompat.getColor(context, R.color.kulrang))
         binding.title.isEnabled = false
         binding.taskIsCheck.isEnabled = false
-        binding.title.setTextColor(ContextCompat.getColor(context, R.color.grey))
     }
 
     fun enableEditText() {
         _binding!!.title.setTextColor(ContextCompat.getColor(context, R.color.black))
-        _binding!!.title?.isEnabled = true
-        _binding?.taskIsCheck?.isEnabled = true
+        _binding!!.title.isEnabled = true
+        _binding!!.taskIsCheck.isEnabled = true
     }
+
+
 
 }

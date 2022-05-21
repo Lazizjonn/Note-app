@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:background="@color/colorBackground"
     tools:context=".presentation.ui.pager.TaskPage">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:focusable="true"
@@ -22,6 +24,19 @@
         app:searchIcon="@drawable/ic_search"
         app:showDividers="middle" />
 
+    <TextView
+        android:id="@+id/tasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tasks:"
+        android:fontFamily="@font/merriweather_regular"
+        android:textSize="22dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/task_recyclerview"
         android:layout_width="match_parent"
@@ -31,5 +46,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@+id/tasks" />
 </androidx.constraintlayout.widget.ConstraintLayout>
