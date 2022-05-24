@@ -93,7 +93,7 @@
         android:inputType="textNoSuggestions|textMultiLine"
         android:padding="10dp"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/tag_input_view"
+        app:layout_constraintBottom_toTopOf="@+id/tagInputView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_note_app_bar"
@@ -102,6 +102,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="3dp"
+        android:visibility="invisible"
         android:background="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +110,7 @@
         />
 
 
-    <org.wordpress.aztec.AztecText
+    <!--<androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/tag_input_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -124,7 +125,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/note_input_view"
-        app:textColor="@color/black" />
+        app:textColor="@color/black" />-->
+
+    <uz.gita.noteapp.presentation.ui.helper.TagInputView
+        android:id="@+id/tagInputView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/formatting_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/note_input_view"/>
 
     <org.wordpress.aztec.toolbar.AztecToolbar
         android:id="@+id/formatting_toolbar"
@@ -145,7 +155,6 @@
         android:layout_margin="20dp"
         app:layout_constraintBottom_toTopOf="@id/formatting_toolbar"
         android:src="@drawable/ic_save"/>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

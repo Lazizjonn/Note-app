@@ -1,5 +1,6 @@
 package uz.gita.noteapp.presentation.ui.screens
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,22 +11,26 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import org.wordpress.aztec.Aztec
 import uz.gita.noteapp.R
-import uz.gita.noteapp.data.model.common.*
+import uz.gita.noteapp.data.model.common.IAztecToolbarClickListenerImpl
+import uz.gita.noteapp.data.model.common.NoteData
+import uz.gita.noteapp.data.model.common.TagData
 import uz.gita.noteapp.databinding.FragmentAddNoteScreenBinding
 import uz.gita.noteapp.presentation.viewmodel.note.AddNoteViewModel
 import uz.gita.noteapp.presentation.viewmodel.note.impl.AddNoteViewModelImpl
-import uz.gita.noteapp.utils.hideKeyboard
 import uz.gita.noteapp.utils.popUp
 
+
 @AndroidEntryPoint
-class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
+class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen) {
     private val binding by viewBinding(FragmentAddNoteScreenBinding::bind)
     private val viewModel: AddNoteViewModel by viewModels<AddNoteViewModelImpl>()
     private var noteArgument: NoteData? = null
-    private lateinit var newTags: List<String>
+    private lateinit var newTags: ArrayList<String>
     private var noteId = 0
     private val oldTags: ArrayList<TagData> = ArrayList()
 
@@ -33,24 +38,26 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
         super.onCreate(savedInstanceState)
         noteArgument = arguments?.get("note") as NoteData?
         noteId = noteArgument?.id ?: 0
-        newTags = noteArgument?.tag ?: emptyList()
+        newTags = ArrayList<String>()
+        newTags.addAll(noteArgument?.tag ?: emptyList())
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         livData()
         setView()
         clicks()
         Aztec.with(binding.noteInputView, binding.formattingToolbar, IAztecToolbarClickListenerImpl())
+
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     private fun livData() {
-        viewModel.noteAddedLiveData.observe(this, noteAddedObserver)
-        viewModel.noteDeletedLiveData.observe(this, noteDeletedObserver)
-        viewModel.tagDeletedLiveData.observe(this, tagDeletedObserver)
-        viewModel.tagInsertedLiveData.observe(this, tagInsertedObserver)
-        viewModel.tagListLiveData.observe(this, tagListLiveData)
+        viewModel.noteAddedLiveData.observe(this@AddNoteScreen, noteAddedObserver)
+        viewModel.noteDeletedLiveData.observe(this@AddNoteScreen, noteDeletedObserver)
+        viewModel.tagDeletedLiveData.observe(this@AddNoteScreen, tagDeletedObserver)
+        viewModel.tagInsertedLiveData.observe(this@AddNoteScreen, tagInsertedObserver)
+        viewModel.tagListLiveData.observe(this@AddNoteScreen, tagListLiveData)
     }
-
     private fun clicks() = with(binding) {
         addNoteBtnBack.setOnClickListener {
             findNavController().navigateUp()
@@ -61,7 +68,7 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
         }
 
         binding.moreMenu.setOnClickListener {
-            val menu = popUp(requireContext(), R.menu.popup_menu, it)
+            val menu = popUp(requireContext(), uz.gita.noteapp.R.menu.popup_menu, it)
 
             menu.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -72,8 +79,9 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
                     }
                     R.id.delete -> {
                         // delete
-                        if (noteId > 0) with(noteArgument!!){
-                            val deletingNote = NoteData(id = this.id, title = title, note = note, tag = newTags, createTime = this.createTime, this.isPinned, this.isDeleted)
+                        if (noteId > 0) with(noteArgument!!) {
+                            val deletingNote =
+                                NoteData(id = this.id, title = title, note = note, tag = newTags, createTime = this.createTime, this.isPinned, this.isDeleted)
                             viewModel.deleteNote(deletingNote)
                         } else Toast.makeText(requireContext(), "You cannot delete", Toast.LENGTH_SHORT).show()
                         true
@@ -82,25 +90,20 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
                         false
                     }
                 }
-//                } else {
-//                    false
-//                }
             }
         }
 
     }
-
     private fun setEditeble() {
         binding.addNoteTitle.isEnabled = true
         binding.noteInputView.isEnabled = true
-        binding.tagInputView.isEnabled = true
+        binding.tagInputView.inputLayout.isEnabled = true
 
         binding.addNoteTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         binding.noteInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-        binding.tagInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.tagInputView.inputLayout.editText!!.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
     }
-
-    private fun setView() = with(binding){
+    private fun setView() = with(binding) {
         noteArgument?.let {
             Log.d("TAG", "notes: " + it.title)
             addNoteTitle.fromHtml(it.title)
@@ -110,47 +113,47 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
             noteInputView.fromHtml(it.note)
             noteInputView.isEnabled = false
             noteInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
-            var tagString = ""
-            it.tag.map { tagString = tagString + " $it" }
-            tagInputView.fromHtml(tagString.trim())
-            tagInputView.isEnabled = false
-            tagInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+
+            it.tag.map { tagInputView.addNewChip(it)}
+            tagInputView.inputLayout.isEnabled = false
+            tagInputView.inputLayout.editText!!.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
 
 
             Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
         }
 
     }
-
     private fun onSaveNoteClick() {
         val title = binding.addNoteTitle.toFormattedHtml()
         val text = binding.noteInputView.toFormattedHtml()
-        newTags = binding.tagInputView.text.toString().trim().split(" ")
-        Log.d("TAG", "addNoteScreen: newTags" + newTags.toString())
-        binding.noteInputView.hideKeyboard()
 
-        if (text.isEmpty() || title.isEmpty()) { return }
+
+        if (text.isEmpty() || title.isEmpty()) {
+            return
+        }
+        val tags = ArrayList<String>()
+        for (i in 0 until binding.tagInputView.chipGroup.childCount) {
+            tags.add((binding.tagInputView.chipGroup.getChildAt(i) as Chip).text.toString())
+            Log.d("TAG", "getChipChild: size " + tags.size)
+        }
 
         if (noteArgument != null) with(noteArgument!!) {
-            viewModel.saveNote(NoteData(id = this.id, title = title, note = text, tag = newTags, createTime = this.createTime, this.isPinned, this.isDeleted))
-        } else{
-            viewModel.saveNote(NoteData(id = 0, title = title, note = text, tag = newTags, createTime = System.currentTimeMillis(), false, false))
+            viewModel.saveNote(NoteData(id = this.id, title = title, note = text, tag = tags, createTime = this.createTime, this.isPinned, this.isDeleted))
+        } else {
+            viewModel.saveNote(NoteData(id = 0, title = title, note = text, tag = tags, createTime = System.currentTimeMillis(), false, false))
         }
 
     }
 
-    private val tagListLiveData = Observer<List<TagData>>{
+    private val tagListLiveData = Observer<List<TagData>> {
         oldTags.addAll(it)
     }
-
-    private val tagDeletedObserver = Observer<Boolean>{
+    private val tagDeletedObserver = Observer<Boolean> {
     }
-
-    private val tagInsertedObserver = Observer<Boolean>{
+    private val tagInsertedObserver = Observer<Boolean> {
         findNavController().navigateUp()
     }
-
-    private val noteAddedObserver = Observer<Unit>{
+    private val noteAddedObserver = Observer<Unit> {
         findNavController().navigateUp() // go back to home fragment
         // note added
         /*if (updateTagList()){
@@ -159,26 +162,46 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
             findNavController().navigateUp() // go back to home fragment
         }*/
     }
-    private val noteDeletedObserver = Observer<Unit>{
+    private val noteDeletedObserver = Observer<Unit> {
         findNavController().navigateUp() // go back to home fragment
     }
-
-
-    private fun updateTagList(): Boolean{
-        Log.d("TAG", "addingNewTag, old size: " + oldTags.size )
+    private fun updateTagList(): Boolean {
+        Log.d("TAG", "addingNewTag, old size: " + oldTags.size)
         val temp = oldTags.size
         newTags.map { new ->
             var exist = false
             oldTags.forEach { oldTag ->
-                if(oldTag.tag == new){
+                if (oldTag.tag == new) {
                     exist = true
                     return@forEach
                 }
             }
             if (!exist) oldTags.add(TagData(new))
         }
-        Log.d("TAG", "addingNewTag, new size: " + oldTags.size )
+        Log.d("TAG", "addingNewTag, new size: " + oldTags.size)
         return temp != oldTags.size
     }
 
+
+    private fun addChipToGroup(txt: String, chipGroup: ChipGroup) {
+        val chip = Chip(context)
+        chip.text = txt
+//        chip.chipIcon = ContextCompat.getDrawable(requireContext(), baseline_person_black_18)
+        chip.isCloseIconEnabled = true
+        chip.setChipIconTintResource(R.color.grey)
+
+        // necessary to get single selection working
+        chip.isClickable = false
+        chip.isCheckable = false
+        chipGroup.addView(chip as View)
+        chip.setOnCloseIconClickListener { chipGroup.removeView(chip as View) }
+        printChipsValue(chipGroup)
+    }
+    private fun printChipsValue(chipGroup: ChipGroup) {
+        for (i in 0 until chipGroup.childCount) {
+            val chipObj = chipGroup.getChildAt(i) as Chip
+            Log.d("Chips text :: " , chipObj.text.toString())
+
+        }
+    }
 }
