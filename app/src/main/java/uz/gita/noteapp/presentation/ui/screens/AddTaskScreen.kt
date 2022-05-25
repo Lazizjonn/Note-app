@@ -42,19 +42,36 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        liveData()
         setAdapters()
         setView()
-        liveData()
         clicks()
-
-
     }
+
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun liveData() {
         viewModel.taskAddedLiveData.observe(this@AddTaskScreen, taskAddedObserver)
         viewModel.taskUpdatedLiveData.observe(this@AddTaskScreen, taskUpdatedObserver)
         viewModel.taskDeletedLiveData.observe(this@AddTaskScreen, taskDeletedObserver)
+    }
+    private fun setAdapters() {
+        binding.taskRecyclerview.adapter = adapter
+        binding.taskRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+    }
+    private fun setView() {
+        if (argTaskData != null) {
+            binding.addTaskTitle.setText(argTaskData!!.title)
+            binding.addTaskTitle.isEnabled = false
+            childTaskList.addAll(argTaskData!!.childTasks)
+            adapter!!.submitList(argTaskData!!.childTasks)
+
+            Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
+        } else {
+            childTaskList.add(ChildTask(1, "", false))
+            adapter!!.submitList(childTaskList)
+        }
+
     }
     private fun clicks() {
         binding.add.setOnClickListener {
@@ -149,6 +166,8 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
             }
         }
     }
+
+
     private fun setEditable() {
         binding.addTaskTitle.isEnabled = true
         adapter = null
@@ -170,24 +189,7 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
         }
 
     }
-    private fun setAdapters() {
-        binding.taskRecyclerview.adapter = adapter
-        binding.taskRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-    }
-    private fun setView() {
-        if (argTaskData != null) {
-            binding.addTaskTitle.setText(argTaskData!!.title)
-            binding.addTaskTitle.isEnabled = false
-            childTaskList.addAll(argTaskData!!.childTasks)
-            adapter!!.submitList(argTaskData!!.childTasks)
 
-            Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
-        } else {
-            childTaskList.add(ChildTask(1, "", false))
-            adapter!!.submitList(childTaskList)
-        }
-
-    }
 
     private val taskAddedObserver = Observer<Unit> { findNavController().navigateUp() }
     private val taskUpdatedObserver = Observer<Unit> { findNavController().navigateUp() }

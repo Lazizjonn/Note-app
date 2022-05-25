@@ -151,7 +151,7 @@
         android:src="@drawable/ic_save"
         app:layout_constraintBottom_toTopOf="@id/formatting_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="#3868FB" />
+        app:tint="@color/colorPrimary" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

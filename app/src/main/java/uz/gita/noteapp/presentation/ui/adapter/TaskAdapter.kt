@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import uz.gita.noteapp.R
-import uz.gita.noteapp.data.model.common.NoteData
 import uz.gita.noteapp.data.model.common.TaskData
-import uz.gita.noteapp.databinding.ItemTaskBinding
 
 class TaskAdapter: ListAdapter<TaskData, TaskAdapter.TaskViewHolder>(TaskDiffUtil) {
 
@@ -41,7 +39,7 @@ class TaskAdapter: ListAdapter<TaskData, TaskAdapter.TaskViewHolder>(TaskDiffUti
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskAdapter.TaskViewHolder =
-        TaskViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false))
+        TaskViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.task_item, parent, false))
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind()

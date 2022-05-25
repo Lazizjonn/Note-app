@@ -46,7 +46,6 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
         setView()
         clicks()
         Aztec.with(binding.noteInputView, binding.formattingToolbar, IAztecToolbarClickListenerImpl())
-
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -56,6 +55,26 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
         viewModel.tagDeletedLiveData.observe(this@AddNoteScreen, tagDeletedObserver)
         viewModel.tagInsertedLiveData.observe(this@AddNoteScreen, tagInsertedObserver)
         viewModel.tagListLiveData.observe(this@AddNoteScreen, tagListLiveData)
+    }
+    private fun setView() = with(binding) {
+        noteArgument?.let {
+            Log.d("TAG", "notes: " + it.title)
+            addNoteTitle.fromHtml(it.title)
+            addNoteTitle.isEnabled = false
+            addNoteTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+
+            noteInputView.fromHtml(it.note)
+            noteInputView.isEnabled = false
+            noteInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+
+            it.tag.map { tagInputView.addNewChip(it) }
+            tagInputView.inputLayout.isEnabled = false
+            tagInputView.inputLayout.editText!!.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+
+
+            Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
+        }
+
     }
     private fun clicks() = with(binding) {
         addNoteBtnBack.setOnClickListener {
@@ -93,6 +112,8 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
         }
 
     }
+
+
     private fun setEditable() {
         binding.addNoteTitle.isEnabled = true
         binding.noteInputView.isEnabled = true
@@ -101,26 +122,6 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
         binding.addNoteTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         binding.noteInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         binding.tagInputView.inputLayout.editText!!.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-    }
-    private fun setView() = with(binding) {
-        noteArgument?.let {
-            Log.d("TAG", "notes: " + it.title)
-            addNoteTitle.fromHtml(it.title)
-            addNoteTitle.isEnabled = false
-            addNoteTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
-
-            noteInputView.fromHtml(it.note)
-            noteInputView.isEnabled = false
-            noteInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
-
-            it.tag.map { tagInputView.addNewChip(it) }
-            tagInputView.inputLayout.isEnabled = false
-            tagInputView.inputLayout.editText!!.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
-
-
-            Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
-        }
-
     }
     private fun onSaveNoteClick() {
         val title = binding.addNoteTitle.toFormattedHtml()
