@@ -32,7 +32,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black"
+                app:tint="@color/colorPrimary"
                 tools:ignore="ContentDescription" />
 
             <org.wordpress.aztec.AztecText
@@ -42,16 +42,15 @@
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
                 android:hint="Write your title here"
-                android:maxLines="1"
                 android:inputType="textCapSentences"
+                android:maxLines="1"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/moreMenu"
                 app:layout_constraintStart_toEndOf="@+id/addNote_btn_back"
                 app:layout_constraintTop_toTopOf="parent"
-                app:textColor="@color/black"
-                />
+                app:textColor="@color/black" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/moreMenu"
@@ -65,7 +64,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black"
+                app:tint="@color/colorPrimary"
                 tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -77,10 +76,9 @@
         android:layout_width="0dp"
         android:layout_height="3dp"
         android:background="@color/grey"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_note_app_bar"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_note_app_bar" />
 
     <org.wordpress.aztec.AztecText
         android:id="@+id/note_input_view"
@@ -102,12 +100,11 @@
     <View
         android:layout_width="0dp"
         android:layout_height="3dp"
-        android:visibility="invisible"
         android:background="@color/grey"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/note_input_view"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/note_input_view" />
 
 
     <!--<androidx.appcompat.widget.AppCompatEditText
@@ -134,7 +131,7 @@
         app:layout_constraintBottom_toTopOf="@+id/formatting_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/note_input_view"/>
+        app:layout_constraintTop_toBottomOf="@+id/note_input_view" />
 
     <org.wordpress.aztec.toolbar.AztecToolbar
         android:id="@+id/formatting_toolbar"
@@ -149,12 +146,12 @@
         android:id="@+id/saveNoteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        app:tint="#3868FB"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_save"
         app:layout_constraintBottom_toTopOf="@id/formatting_toolbar"
-        android:src="@drawable/ic_save"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="#3868FB" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

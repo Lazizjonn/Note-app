@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:background="@color/colorBackground"
+    android:padding="10dp"
     tools:context=".presentation.ui.pager.TaskPage">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:focusable="true"
+        android:visibility="gone"
         app:closeIcon="@drawable/ic_close"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,27 +24,35 @@
         app:searchIcon="@drawable/ic_search"
         app:showDividers="middle" />
 
+    <View
+        android:id="@+id/stick"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/tasks" />
+
     <TextView
         android:id="@+id/tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tasks:"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/merriweather_regular"
-        android:textSize="22dp"
+        android:text="My tasks "
         android:textColor="@color/black"
-        android:layout_marginTop="2dp"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/task_recyclerview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/task_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/note_item"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tasks" />
+        app:layout_constraintTop_toBottomOf="@+id/tasks"
+        tools:listitem="@layout/note_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

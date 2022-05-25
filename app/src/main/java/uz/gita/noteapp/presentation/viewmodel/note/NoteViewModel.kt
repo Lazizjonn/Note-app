@@ -8,6 +8,7 @@ interface NoteViewModel {
     val allNoteLiveData: LiveData<Pair<Boolean,List<NoteData>>>
 //    val tagListLiveData: LiveData<List<TagData>>
     val tagFilterLiveData: LiveData<TagData>
+    val openFilterLiveData : LiveData<Unit>
 
     fun getTags()
 
@@ -16,5 +17,7 @@ interface NoteViewModel {
     fun tagFilter(tag: TagData)
 
     fun filterNotes(allTags: List<String>, noteData: List<NoteData>)
+
+    fun openFilterDialog()
 
 }

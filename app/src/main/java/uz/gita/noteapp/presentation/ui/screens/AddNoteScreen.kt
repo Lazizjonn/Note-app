@@ -26,7 +26,7 @@ import uz.gita.noteapp.utils.popUp
 
 
 @AndroidEntryPoint
-class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen) {
+class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
     private val binding by viewBinding(FragmentAddNoteScreenBinding::bind)
     private val viewModel: AddNoteViewModel by viewModels<AddNoteViewModelImpl>()
     private var noteArgument: NoteData? = null
@@ -41,7 +41,6 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
         newTags = ArrayList<String>()
         newTags.addAll(noteArgument?.tag ?: emptyList())
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         livData()
         setView()
@@ -68,13 +67,13 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
         }
 
         binding.moreMenu.setOnClickListener {
-            val menu = popUp(requireContext(), uz.gita.noteapp.R.menu.popup_menu, it)
+            val menu = popUp(requireContext(), R.menu.popup_menu, it)
 
-            menu.setOnMenuItemClickListener {
-                when (it.itemId) {
+            menu.setOnMenuItemClickListener { it_ ->
+                when (it_.itemId) {
                     R.id.edit -> {
                         // editable
-                        setEditeble()
+                        setEditable()
                         true
                     }
                     R.id.delete -> {
@@ -94,7 +93,7 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
         }
 
     }
-    private fun setEditeble() {
+    private fun setEditable() {
         binding.addNoteTitle.isEnabled = true
         binding.noteInputView.isEnabled = true
         binding.tagInputView.inputLayout.isEnabled = true
@@ -114,7 +113,7 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
             noteInputView.isEnabled = false
             noteInputView.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
 
-            it.tag.map { tagInputView.addNewChip(it)}
+            it.tag.map { tagInputView.addNewChip(it) }
             tagInputView.inputLayout.isEnabled = false
             tagInputView.inputLayout.editText!!.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
 
@@ -144,6 +143,14 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
         }
 
     }
+    private fun printChipsValue(chipGroup: ChipGroup) {
+        for (i in 0 until chipGroup.childCount) {
+            val chipObj = chipGroup.getChildAt(i) as Chip
+            Log.d("Chips text :: ", chipObj.text.toString())
+
+        }
+    }
+
 
     private val tagListLiveData = Observer<List<TagData>> {
         oldTags.addAll(it)
@@ -165,6 +172,8 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
     private val noteDeletedObserver = Observer<Unit> {
         findNavController().navigateUp() // go back to home fragment
     }
+
+
     private fun updateTagList(): Boolean {
         Log.d("TAG", "addingNewTag, old size: " + oldTags.size)
         val temp = oldTags.size
@@ -181,8 +190,6 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
         Log.d("TAG", "addingNewTag, new size: " + oldTags.size)
         return temp != oldTags.size
     }
-
-
     private fun addChipToGroup(txt: String, chipGroup: ChipGroup) {
         val chip = Chip(context)
         chip.text = txt
@@ -196,12 +203,5 @@ class AddNoteScreen : Fragment(uz.gita.noteapp.R.layout.fragment_add_note_screen
         chipGroup.addView(chip as View)
         chip.setOnCloseIconClickListener { chipGroup.removeView(chip as View) }
         printChipsValue(chipGroup)
-    }
-    private fun printChipsValue(chipGroup: ChipGroup) {
-        for (i in 0 until chipGroup.childCount) {
-            val chipObj = chipGroup.getChildAt(i) as Chip
-            Log.d("Chips text :: " , chipObj.text.toString())
-
-        }
     }
 }

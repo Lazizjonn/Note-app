@@ -6,7 +6,7 @@
     android:id="@+id/taskLinear"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="#FDE6A0"
+    android:background="@color/grey"
     android:orientation="horizontal">
 
     <CheckBox

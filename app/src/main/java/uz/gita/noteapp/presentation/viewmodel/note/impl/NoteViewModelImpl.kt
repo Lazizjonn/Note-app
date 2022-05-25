@@ -1,6 +1,5 @@
 package uz.gita.noteapp.presentation.viewmodel.note.impl
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,12 +20,13 @@ class NoteViewModelImpl @Inject constructor(
     private val filterTag = ArrayList<String>()
     private var recentNotes = ArrayList<NoteData>()
 
-    override val allNoteLiveData = MutableLiveData<Pair<Boolean,List<NoteData>>>()
-//    override val tagListLiveData = MutableLiveData<List<TagData>>()
+    override val allNoteLiveData = MutableLiveData<Pair<Boolean, List<NoteData>>>()
     override val tagFilterLiveData = MutableLiveData<TagData>()
+    override val openFilterLiveData = MutableLiveData<Unit>()
+    //    override val tagListLiveData = MutableLiveData<List<TagData>>()
 
 
-    override fun getTags(){
+    override fun getTags() {
         viewModelScope.launch {
 //            val result = useCase.getTags() ?: listOf()
 //            tagListLiveData.postValue(result)
@@ -53,16 +53,16 @@ class NoteViewModelImpl @Inject constructor(
         }
         tagFilterLiveData.value = tag
 
-        if (filterTag.size>0) filterNotes(filterTag, recentNotes)
+        if (filterTag.size > 0) filterNotes(filterTag, recentNotes)
         else load()
     }
 
     override fun filterNotes(allTags: List<String>, noteData: List<NoteData>) {
         val A = ArrayList<NoteData>()
         noteData.onEach { note ->
-            note.tag.onEachIndexed {a, tagInNote ->
+            note.tag.onEachIndexed { a, tagInNote ->
                 allTags.onEach { tag ->
-                    if (tag == tagInNote){
+                    if (tag == tagInNote) {
                         A.add(note)
                         return@onEachIndexed
                     }
@@ -70,6 +70,10 @@ class NoteViewModelImpl @Inject constructor(
             }
         }
         allNoteLiveData.value = Pair(true, A.distinct())
+    }
+
+    override fun openFilterDialog() {
+        openFilterLiveData.value = Unit
     }
 
 }

@@ -1,5 +1,6 @@
 package uz.gita.noteapp.presentation.ui.screens
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -24,7 +25,7 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
     private val binding by viewBinding(FragmentAddTaskScreenBinding::bind)
     private val viewModel: AddTaskViewModel by viewModels<AddTaskViewModelImpl>()
     private var argTaskData: TaskData? = null
-    private val childTasklist = ArrayList<ChildTask>()
+    private val childTaskList = ArrayList<ChildTask>()
     private var adapter: ChildTaskAdapter? = null
     private var adapter2: ChildTaskAdapter? = null
     private var taskId = 0
@@ -40,20 +41,25 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
         adapter = ChildTaskAdapter(requireContext(), argTaskData != null)
 
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setAdapters()
         setView()
-        liveDatas()
+        liveData()
         clicks()
 
 
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
+    private fun liveData() {
+        viewModel.taskAddedLiveData.observe(this@AddTaskScreen, taskAddedObserver)
+        viewModel.taskUpdatedLiveData.observe(this@AddTaskScreen, taskUpdatedObserver)
+        viewModel.taskDeletedLiveData.observe(this@AddTaskScreen, taskDeletedObserver)
+    }
     private fun clicks() {
         binding.add.setOnClickListener {
-            childTasklist.add(ChildTask(childTasklist.size, "", false))
-            adapter!!.submitList(childTasklist.toMutableList())
+            childTaskList.add(ChildTask(childTaskList.size, "", false))
+            adapter!!.submitList(childTaskList.toMutableList())
         }
 
         binding.addTaskBtnBack.setOnClickListener {
@@ -61,22 +67,22 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
         }
 
         adapter!!.setCancelTaskListener {
-            childTasklist.remove(it)
-            adapter!!.submitList(childTasklist.toMutableList())
+            childTaskList.remove(it)
+            adapter!!.submitList(childTaskList.toMutableList())
         }
 
         adapter!!.setChildTaskListener { new ->
-            childTasklist.map{ old ->
+            childTaskList.map { old ->
                 if (new == old) new
             }
-            adapter!!.submitList(childTasklist.toMutableList())
+            adapter!!.submitList(childTaskList.toMutableList())
         }
 
 
 
         binding.saveTaskBtn.setOnClickListener {
             // save
-            if (adapter != null){
+            if (adapter != null) {
                 val newTask = TaskData(
                     taskId,
                     binding.addTaskTitle.text.toString(),
@@ -102,17 +108,17 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
         binding.moreMenu.setOnClickListener {
             val menu = popUp(requireContext(), R.menu.popup_menu, it)
 
-            menu.setOnMenuItemClickListener {
-                when (it.itemId) {
+            menu.setOnMenuItemClickListener { it_ ->
+                when (it_.itemId) {
                     R.id.edit -> {
                         // editable
-                        setEditeble()
+                        setEditable()
                         true
                     }
                     R.id.delete -> {
                         // delete
-                        if (taskId > 0 ){
-                            if (adapter != null){
+                        if (taskId > 0) {
+                            if (adapter != null) {
                                 val deletingTask = TaskData(
                                     taskId,
                                     binding.addTaskTitle.text.toString(),
@@ -143,63 +149,47 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
             }
         }
     }
-
-    private fun setEditeble() {
+    private fun setEditable() {
         binding.addTaskTitle.isEnabled = true
         adapter = null
         adapter2 = ChildTaskAdapter(requireContext(), false)
         binding.taskRecyclerview.adapter = adapter2
         binding.taskRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        adapter2!!.submitList(childTasklist)
+        adapter2!!.submitList(childTaskList)
 
         adapter2!!.setCancelTaskListener {
-            childTasklist.remove(it)
-            adapter2!!.submitList(childTasklist.toMutableList())
+            childTaskList.remove(it)
+            adapter2!!.submitList(childTaskList.toMutableList())
         }
 
         adapter2!!.setChildTaskListener { new ->
-            childTasklist.map{ old ->
+            childTaskList.map { old ->
                 if (new == old) new
             }
-            adapter2!!.submitList(childTasklist.toMutableList())
+            adapter2!!.submitList(childTaskList.toMutableList())
         }
 
     }
-
-    private fun liveDatas() {
-        viewModel.taskAddedLiveData.observe(this, taskAddedObserver)
-        viewModel.taskUpdatedLiveData.observe(this, taskUpdatedObserver)
-        viewModel.taskDeletedLiveData.observe(this, taskDeletedObserver)
-    }
-
     private fun setAdapters() {
         binding.taskRecyclerview.adapter = adapter
         binding.taskRecyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
-
     private fun setView() {
-        if (argTaskData != null){
+        if (argTaskData != null) {
             binding.addTaskTitle.setText(argTaskData!!.title)
             binding.addTaskTitle.isEnabled = false
-            childTasklist.addAll(argTaskData!!.childTasks)
+            childTaskList.addAll(argTaskData!!.childTasks)
             adapter!!.submitList(argTaskData!!.childTasks)
 
             Toast.makeText(requireContext(), "Reading mode!", Toast.LENGTH_SHORT).show()
         } else {
-            childTasklist.add(ChildTask(1, "", false))
-            adapter!!.submitList(childTasklist)
+            childTaskList.add(ChildTask(1, "", false))
+            adapter!!.submitList(childTaskList)
         }
 
     }
 
-    private val taskAddedObserver = Observer<Unit>{
-        findNavController().navigateUp()
-    }
-    private val taskUpdatedObserver = Observer<Unit>{
-        findNavController().navigateUp()
-    }
-    private val taskDeletedObserver = Observer<Unit>{
-        findNavController().navigateUp()
-    }
-
+    private val taskAddedObserver = Observer<Unit> { findNavController().navigateUp() }
+    private val taskUpdatedObserver = Observer<Unit> { findNavController().navigateUp() }
+    private val taskDeletedObserver = Observer<Unit> { findNavController().navigateUp() }
 }
