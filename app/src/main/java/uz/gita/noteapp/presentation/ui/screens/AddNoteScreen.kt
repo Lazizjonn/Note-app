@@ -1,6 +1,7 @@
 package uz.gita.noteapp.presentation.ui.screens
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -98,9 +99,16 @@ class AddNoteScreen : Fragment(R.layout.fragment_add_note_screen) {
                     R.id.delete -> {
                         // delete
                         if (noteId > 0) with(noteArgument!!) {
-                            val deletingNote =
-                                NoteData(id = this.id, title = title, note = note, tag = newTags, createTime = this.createTime, this.isPinned, this.isDeleted)
-                            viewModel.deleteNote(deletingNote)
+                            val dialog = AlertDialog.Builder(requireContext(), R.style.dialog_style)
+                            dialog.setTitle("Do you want delete?")
+                            dialog.setPositiveButton("Yes"){ _, which ->
+                                val deletingNote = NoteData(id = this.id, title = title, note = note, tag = newTags, createTime = this.createTime, this.isPinned, this.isDeleted)
+                                viewModel.deleteNote(deletingNote)
+                            }.setNegativeButton("No") { _dialog, which ->
+                                _dialog.dismiss()
+                            }
+                            dialog.create().show()
+
                         } else Toast.makeText(requireContext(), "You cannot delete", Toast.LENGTH_SHORT).show()
                         true
                     }

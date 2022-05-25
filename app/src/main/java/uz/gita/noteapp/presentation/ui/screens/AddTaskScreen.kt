@@ -76,7 +76,8 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
     private fun clicks() {
         binding.add.setOnClickListener {
             childTaskList.add(ChildTask(childTaskList.size, "", false))
-            adapter!!.submitList(childTaskList.toMutableList())
+            if ( adapter != null ) adapter!!.submitList(childTaskList.toMutableList())
+            else adapter2!!.submitList(childTaskList.toMutableList())
         }
 
         binding.addTaskBtnBack.setOnClickListener {
@@ -135,27 +136,14 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
                     R.id.delete -> {
                         // delete
                         if (taskId > 0) {
-                            if (adapter != null) {
-                                val deletingTask = TaskData(
-                                    taskId,
-                                    binding.addTaskTitle.text.toString(),
-                                    adapter!!.currentList,
-                                    argTaskData?.createTime ?: System.currentTimeMillis(),
-                                    argTaskData?.isPinned ?: false,
-                                    argTaskData?.isDeleted ?: false
-                                )
-                                viewModel.deleteTask(deletingTask)
-                            } else {
-                                val deletingTask = TaskData(
-                                    taskId,
-                                    binding.addTaskTitle.text.toString(),
-                                    adapter2!!.currentList,
-                                    argTaskData?.createTime ?: System.currentTimeMillis(),
-                                    argTaskData?.isPinned ?: false,
-                                    argTaskData?.isDeleted ?: false
-                                )
-                                viewModel.deleteTask(deletingTask)
+                            val dialog = AlertDialog.Builder(requireContext(), R.style.dialog_style)
+                            dialog.setTitle("Do you want delete?")
+                            dialog.setPositiveButton("Yes"){ _, which ->
+                                openDeleteDialog()
+                            }.setNegativeButton("No") { _dialog, which ->
+                                _dialog.dismiss()
                             }
+                            dialog.create().show()
                         } else Toast.makeText(requireContext(), "You cannot delete", Toast.LENGTH_SHORT).show()
                         true
                     }
@@ -167,14 +155,37 @@ class AddTaskScreen : Fragment(R.layout.fragment_add_task_screen) {
         }
     }
 
+    private fun openDeleteDialog() {
+        if (adapter != null) {
+            val deletingTask = TaskData(
+                taskId,
+                binding.addTaskTitle.text.toString(),
+                adapter!!.currentList,
+                argTaskData?.createTime ?: System.currentTimeMillis(),
+                argTaskData?.isPinned ?: false,
+                argTaskData?.isDeleted ?: false
+            )
+            viewModel.deleteTask(deletingTask)
+        } else {
+            val deletingTask = TaskData(
+                taskId,
+                binding.addTaskTitle.text.toString(),
+                adapter2!!.currentList,
+                argTaskData?.createTime ?: System.currentTimeMillis(),
+                argTaskData?.isPinned ?: false,
+                argTaskData?.isDeleted ?: false
+            )
+            viewModel.deleteTask(deletingTask)
+        }
+    }
 
     private fun setEditable() {
         binding.addTaskTitle.isEnabled = true
-        adapter = null
         adapter2 = ChildTaskAdapter(requireContext(), false)
         binding.taskRecyclerview.adapter = adapter2
         binding.taskRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         adapter2!!.submitList(childTaskList)
+        adapter = null
 
         adapter2!!.setCancelTaskListener {
             childTaskList.remove(it)
