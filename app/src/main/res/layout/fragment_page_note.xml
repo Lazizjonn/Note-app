@@ -57,7 +57,6 @@
         android:text=" My notes"
         android:textColor="@color/black"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/stick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,5 +71,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes"
         tools:listitem="@layout/note_item" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/anim_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notes"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/empty_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

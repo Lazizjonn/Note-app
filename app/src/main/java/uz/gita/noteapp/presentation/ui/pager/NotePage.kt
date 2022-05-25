@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -45,6 +46,7 @@ class NotePage : Fragment(R.layout.fragment_page_note) {
     }
 
     private fun adapters() {
+        binding.noteRecyclerview.isVisible = false
         binding.noteRecyclerview.adapter = noteAdapter
         binding.noteRecyclerview.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         //   binding.tagRecycle.adapter = tagAdapter
@@ -82,7 +84,14 @@ class NotePage : Fragment(R.layout.fragment_page_note) {
             filterDialog.tagAdapter.submitList(allTags)
 
         }
-        noteAdapter.submitList(noteData.second)
+        if (noteData.second.size> 0) {
+            binding.noteRecyclerview.isVisible = true
+            binding.animView.isVisible = false
+            noteAdapter.submitList(noteData.second)
+        } else {
+            binding.noteRecyclerview.isVisible = false
+            binding.animView.isVisible = true
+        }
 
     }
     private val tagFilterObserver = Observer<TagData> { changed ->

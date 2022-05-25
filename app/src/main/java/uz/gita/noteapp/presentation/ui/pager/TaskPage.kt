@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -36,14 +37,22 @@ class TaskPage : Fragment(R.layout.fragment_page_task) {
     }
 
     private fun setAdapter() {
+        binding.taskRecyclerview.isVisible = false
         binding.taskRecyclerview.adapter = adapter
         binding.taskRecyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private val taskObserver = Observer<List<TaskData>> { taskData ->
-        taskList.clear()
-        taskList.addAll(taskData)
-        adapter.submitList(taskList.toMutableList())
+        if (taskData.size> 0) {
+            binding.taskRecyclerview.isVisible = true
+            binding.animView.isVisible = false
+            taskList.clear()
+            taskList.addAll(taskData)
+            adapter.submitList(taskList.toMutableList())
+        } else {
+            binding.taskRecyclerview.isVisible = false
+            binding.animView.isVisible = true
+        }
 
         adapter.setTaskListener {
             /*val bundle = Bundle()
