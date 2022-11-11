@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreen"
-        android:name="uz.gita.noteapp.presentation.ui.screens.SplashScreen"
+        android:name="uz.gita.noteapp_slp.presentation.ui.screens.SplashScreen"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen">
         <action
@@ -18,35 +18,35 @@
     </fragment>
     <fragment
         android:id="@+id/mainScreen"
-        android:name="uz.gita.noteapp.presentation.ui.screens.MainScreen"
+        android:name="uz.gita.noteapp_slp.presentation.ui.screens.MainScreen"
         android:label="fragment_main_screen"
         tools:layout="@layout/fragment_main_screen"/>
     <fragment
         android:id="@+id/addNoteScreen"
-        android:name="uz.gita.noteapp.presentation.ui.screens.AddNoteScreen"
+        android:name="uz.gita.noteapp_slp.presentation.ui.screens.AddNoteScreen"
         android:label="fragment_add_note_screen"
         tools:layout="@layout/fragment_add_note_screen" >
         <argument
             android:name="note"
-            app:argType="uz.gita.noteapp.data.model.common.NoteData" />
+            app:argType="uz.gita.noteapp_slp.data.model.common.NoteData" />
     </fragment>
     <fragment
         android:id="@+id/addTaskScreen"
-        android:name="uz.gita.noteapp.presentation.ui.screens.AddTaskScreen"
+        android:name="uz.gita.noteapp_slp.presentation.ui.screens.AddTaskScreen"
         android:label="fragment_add_task_screen"
         tools:layout="@layout/fragment_add_task_screen" >
         <argument
             android:name="task"
-            app:argType="uz.gita.noteapp.data.model.common.TaskData" />
+            app:argType="uz.gita.noteapp_slp.data.model.common.TaskData" />
     </fragment>
     <fragment
         android:id="@+id/notePage"
-        android:name="uz.gita.noteapp.presentation.ui.pager.NotePage"
+        android:name="uz.gita.noteapp_slp.presentation.ui.pager.NotePage"
         android:label="fragment_page_note"
         tools:layout="@layout/fragment_page_note" />
     <fragment
         android:id="@+id/taskPage"
-        android:name="uz.gita.noteapp.presentation.ui.pager.TaskPage"
+        android:name="uz.gita.noteapp_slp.presentation.ui.pager.TaskPage"
         android:label="fragment_page_task"
         tools:layout="@layout/fragment_page_task" >
         <action

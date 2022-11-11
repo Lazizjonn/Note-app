@@ -124,7 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/note_input_view"
         app:textColor="@color/black" />-->
 
-    <uz.gita.noteapp.presentation.ui.helper.TagInputView
+    <uz.gita.noteapp_slp.presentation.ui.helper.TagInputView
         android:id="@+id/tagInputView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

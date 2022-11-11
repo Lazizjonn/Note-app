@@ -18,5 +18,5 @@ dependencyResolutionManagement {
         maven { url "https://a8c-libs.s3.amazonaws.com/android" }
     }
 }
-rootProject.name = "NoteApp"
+rootProject.name = "NoteApp_slp"
 include ':app'
